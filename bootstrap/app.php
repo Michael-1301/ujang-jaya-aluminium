@@ -11,7 +11,9 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        // Render berada di belakang proxy HTTPS: percayai header X-Forwarded-*
+        // supaya Laravel membuat URL dengan https:// (bukan http://).
+        $middleware->trustProxies(at: '*');
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
